@@ -1,0 +1,42 @@
+---
+title: 入门指南
+sidebar_position: 2
+---
+
+# 入门指南
+
+这一章把一次完整接入拆成三个动作：**准备环境 → 表单挂组件 → 服务端校验令牌**。
+
+## 前置条件
+
+- 一个可运行的服务端进程（用于签发挑战、兑换与校验）
+- 一个设置了 `CAP_SECRET` 的环境
+- 静态资源目录 `/cap/` 可从同源访问
+
+:::caution
+
+`CAP_SECRET` 是挑战签名密钥。生产环境必须换成长随机串，且不要复用开发值。轮换它会让所有在途挑战立即失效。
+
+:::
+
+## 三步走
+
+<div className="nscha-steps">
+  <div className="nscha-step"><h3>准备配置与资源</h3><p>设置签名密钥与难度参数，确认求解器资源由本站提供。</p></div>
+  <div className="nscha-step"><h3>在表单上挂验证组件</h3><p>为这张表单登记用途（登录 / 注册 / 找回密码），组件负责求解并交出令牌。</p></div>
+  <div className="nscha-step"><h3>在业务接口校验令牌</h3><p>在处理提交内容之前校验用途与时效；校验失败立即拒绝，不查询账号、不发邮件。</p></div>
+</div>
+
+## 本章页面
+
+| 页面 | 内容 |
+| --- | --- |
+| [五分钟接入](./getting-started/quickstart.mdx) | 最小可跑通的路径与自检清单 |
+| [表单接入](./getting-started/form-integration.mdx) | 组件、用途与令牌的传递 |
+| [服务端校验](./getting-started/server-verification.mdx) | 校验时机、失败分支与错误码 |
+
+:::info
+
+接入过程中若遇到「一直显示正在验证」，先看[故障排查](./limitations/troubleshooting.mdx)。
+
+:::

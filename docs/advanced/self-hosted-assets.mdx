@@ -1,0 +1,54 @@
+---
+title: 自托管求解器
+---
+
+# 自托管求解器
+
+同源承诺最容易破的地方不是挑战接口，而是**求解器资源的默认地址**。
+
+## 需要覆盖的三类资源
+
+| 资源 | 用途 |
+| --- | --- |
+| 主求解器 WASM | 在 Worker 里跑哈希循环 |
+| 降级求解器 WASM | 浏览器能力不足时的替代实现 |
+| 解压兜底脚本 | 缺少原生解压能力时才会加载 |
+
+第三类在当前配置下几乎不会被触发，但仍然要覆盖 —— 否则「不产生第三方请求」只是一句有条件的承诺。
+
+## 覆盖顺序
+
+```js
+// widget.js 里真实执行的顺序：先设地址，再加载求解器
+const ORIGIN = new URL(document.currentScript.src, location.href).origin
+
+window.CAP_CUSTOM_WASM_URL  = ORIGIN + '/cap/cap_wasm_bg.wasm'
+window.CAP_CUSTOM_HASHWX_URL = ORIGIN + '/cap/hashwx.wasm'
+window.CAP_PAKO_URL          = ORIGIN + '/cap/pako_inflate.min.js'
+
+// 之后才把 <script src="ORIGIN + '/nscha-solver.js'"> 插入文档
+```
+
+注意第三个全局是 `CAP_PAKO_URL`，没有 `CUSTOM_` 中缀。
+
+:::caution
+
+**顺序是硬要求** — 求解器模块在被求值时就会发起一次资源预取。晚于动态导入再设置全局地址，预取已经落到默认地址，同源承诺随之失效。
+
+:::
+
+## 资源从哪来
+
+打包阶段把这三份文件产出到 `public/cap/`（由 `CAP_ASSET_BASE` 指向），并随站点一起发布。它们不含用户数据，可以安全地长期缓存。依赖版本升级后需要重新同步一次资源。
+
+## 核验
+
+1. 打开 Network 面板，过滤域名，完成一次验证
+2. 确认所有请求都指向本站
+3. 故意把浏览器切到不支持原生解压的模式，确认兜底脚本同样来自本站
+
+:::tip
+
+**可见性与署名** — 验证组件以不可见模式运行，页面上显示的是我们自己的 NSCHA 盒子，链接指向这份文档。这个细节同时保住了视觉一致性与同源承诺。
+
+:::

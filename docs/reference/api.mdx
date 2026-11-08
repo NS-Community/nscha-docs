@@ -1,0 +1,92 @@
+---
+title: 接口参考
+---
+
+# 接口参考
+
+独立部署的 `nscha-widget` 服务把接口挂在根路径。gamesense 论坛内嵌的那一份带
+`/api/auth/captcha/` 前缀，字段与协议完全相同。
+
+## POST /challenge
+
+签发一份挑战。**不写数据库**。
+
+请求头：
+
+```text
+x-captcha-scope: login
+```
+
+响应：
+
+```json
+{
+  "challenge": {"c": 20, "s": 32, "d": 3},
+  "token": "<签名的挑战串>",
+  "expires": 600
+}
+```
+
+| 字段 | 含义 |
+| --- | --- |
+| `c` | 子挑战数量 |
+| `s` | 盐长度（字节） |
+| `d` | 哈希前导零个数 |
+| `token` | 带签名的挑战令牌 |
+| `expires` | 有效期（秒） |
+
+## POST /redeem
+
+交回答案，换取兑换令牌。
+
+```json
+{
+  "token": "<挑战令牌>",
+  "solutions": [{"i": 0, "n": 3812}, {"i": 1, "n": 1177}]
+}
+```
+
+| 字段 | 含义 |
+| --- | --- |
+| `token` | 上一步的挑战令牌 |
+| `solutions` | 子挑战序号 `i` 与命中计数器 `n` |
+
+成功后返回 `{ success: true, token, expires }`。失败统一返回简短错误，不细分验签或验算。
+
+## POST /verify
+
+业务接口在处理数据之前调用，传入期望用途：
+
+```js
+const res = await fetch('https://your-nscha-host/verify', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ token: req.body.nschaToken, scope: 'login' }),
+})
+
+if (!res.ok) return respond(403)
+```
+
+请求 `{ token, scope }`。通过返回 `200 { ok: true }`，失败统一 `403 { ok: false }` —— 具体原因只进服务端日志，不回传给调用方。
+
+校验项：签名、专用标记 `nscha: true`、用途、时效。用途白名单为 `login` / `register` / `reset`，由 `CAP_SCOPES` 配置。
+
+## 组件
+
+```html
+<script src="https://your-nscha-host/widget.js" defer></script>
+<nscha-widget action="login" name="nschaToken"></nscha-widget>
+```
+
+成功后写入隐藏字段 `nschaToken` 并派发 `nscha:success`；`reset()` 清空令牌。属性与事件见[表单接入](../getting-started/form-integration.mdx)。
+
+:::caution
+
+**一次性语义** — 兑换接口保证同一份挑战在同一进程内只能兑换一次；校验函数不对兑换令牌做全局一次性消费。
+
+:::
+
+## 相关
+
+- [环境变量](../configuration/env-vars.mdx)
+- [作用域与重放](../how-it-works/scope-and-replay.mdx)

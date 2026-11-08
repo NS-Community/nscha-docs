@@ -1,0 +1,89 @@
+---
+title: 五分钟接入
+---
+
+# 五分钟接入
+
+NSCHA 有一份独立可部署的组件服务（`nscha-widget`）。最短路径是：部署一份服务 → 复制两行 HTML → 在业务接口里加一次校验。
+
+## 1. 部署服务
+
+把 `nscha-widget` 仓库部署到你自己的账号。它不需要数据库，只需要一个必填环境变量：
+
+```bash
+# 生成签名密钥
+node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
+
+# 写入 CAP_SECRET，然后启动
+pnpm start        # http://localhost:8788
+```
+
+部署完成后记下服务地址，下文记作 `https://your-nscha-host`。
+
+:::caution
+
+改完环境变量需要**重启服务**，进程内配置不会热更新。
+
+:::
+
+## 2. 确认求解器资源
+
+浏览器访问 `https://your-nscha-host/cap/` 下的资源，确认返回的是本站文件而不是 404。求解器必须同源；任何指向公共 CDN 的默认值都应被覆盖。详见[自托管求解器](../advanced/self-hosted-assets.mdx)。
+
+## 3. 挂上验证组件
+
+```html
+<script src="https://your-nscha-host/widget.js" defer></script>
+
+<nscha-widget action="login" name="nschaToken"></nscha-widget>
+```
+
+`action` 决定用途，必须在 `CAP_SCOPES` 白名单里。组件挂载后自动求解，验证通过会往表单里写入隐藏字段：
+
+```html
+<input type="hidden" name="nschaToken" value="eyJ...">
+```
+
+同时派发 `nscha:success`，`detail` 为 `{ token, scope, elapsedMs }`。
+
+## 4. 随表单提交
+
+字段随表单一起提交，不需要额外 JS：
+
+```html
+<form method="post" action="/login">
+  <input name="username">
+  <input name="password" type="password">
+  <nscha-widget action="login"></nscha-widget>
+  <button type="submit">登录</button>
+</form>
+```
+
+## 5. 服务端先校验
+
+校验必须发生在**查询账号之前**，否则未通过验证的请求仍会触发数据库查询与失败计数：
+
+```js
+const res = await fetch('https://your-nscha-host/verify', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ token: req.body.nschaToken, scope: 'login' }),
+})
+
+if (!res.ok) return respond(403, { error: '人机验证未通过，请重试' })
+// 通过之后才比对密码
+```
+
+提交完成后清空令牌，**成功与失败分支都要清**：
+
+```js
+document.querySelector('nscha-widget').reset()
+```
+
+## 自检清单
+
+- [ ] 打开页面，验证盒子在 1 秒内完成并显示通过状态
+- [ ] 网络面板里没有任何第三方域名请求
+- [ ] 表单请求体带上 `nschaToken`，`/verify` 返回 `200 { ok: true }`
+- [ ] 拿登录用途的令牌去校验 `register`，应返回 403
+- [ ] 修改 `CAP_CHALLENGE_DIFFICULTY` 并重启，求解耗时随之变化

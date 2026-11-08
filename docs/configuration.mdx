@@ -1,0 +1,33 @@
+---
+title: 配置参考
+sidebar_position: 5
+---
+
+# 配置参考
+
+全部通过环境变量调整，**改动后需重启服务**才会生效。
+
+## 速查表
+
+| 参数 | 默认值 | 说明 |
+| --- | --- | --- |
+| `CAP_CHALLENGE_COUNT` | `20` | 单次验证包含的子挑战数量 |
+| `CAP_CHALLENGE_SIZE` | `32` | 盐长度（字节） |
+| `CAP_CHALLENGE_DIFFICULTY` | `3` | 哈希前导零的个数 |
+| `CAP_EXPIRES_SECONDS` | `600` | 挑战有效期 |
+| `CAP_TOKEN_TTL_SECONDS` | `1200` | 兑换令牌有效期 |
+| `CAP_ASSET_BASE` | `/cap` | 求解器静态资源目录，保持本站同源 |
+| `CAP_SECRET` | 必填 | 挑战签名密钥，生产环境必须替换 |
+
+:::caution
+
+**注意** — 子挑战数量 × 难度直接决定兑换请求的耗时。在无服务器环境里，请把两者控制在函数的时间预算之内。
+
+:::
+
+## 本章页面
+
+| 页面 | 内容 |
+| --- | --- |
+| [环境变量](./configuration/env-vars.mdx) | 逐项说明、取值范围与生效时机 |
+| [难度与性能调优](./configuration/tuning.mdx) | 如何按设备与时间预算选参数 |

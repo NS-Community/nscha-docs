@@ -1,0 +1,5 @@
+# pnpm 12 blocks lifecycle scripts unless explicitly allowed.
+# core-js only prints a donation notice in its postinstall; allow it so a
+# fresh `pnpm install` finishes cleanly instead of raising ERR_PNPM_IGNORED_BUILDS.
+onlyBuiltDependencies:
+  - core-js

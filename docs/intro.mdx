@@ -1,0 +1,59 @@
+---
+title: NSCHA 是什么
+slug: /
+sidebar_position: 1
+---
+
+import Link from '@docusaurus/Link';
+
+<div className="nscha-eyebrow">介绍 · 入口页</div>
+
+# NSCHA 是什么
+
+<div className="nscha-latin">Non-Surveillance CAPTCHA for Human Authentication</div>
+
+<div className="nscha-lede">不观察你，也不打扰你 —— 只让每一次提交付出一点计算成本。</div>
+
+NSCHA 是我们的人机验证产品。它**不试图判断屏幕前是不是真人**，而是把「提交」这件事标上一个极小的价格：普通访客只花几十毫秒的 CPU，批量刷接口的人却要为每一次请求重复付账。
+
+验证全过程只发生在访客的浏览器与本站服务器之间。挑战由本站签发、求解器由本站提供、令牌由本站校验 —— 没有外部域名、没有 Cookie、没有行为采集，也没有需要辨认的交通灯。
+
+<div className="nscha-actions">
+  <Link className="nscha-btn nscha-btn--primary" to="/how-it-works">阅读工作原理 →</Link>
+  <Link className="nscha-btn nscha-btn--ghost" to="/getting-started/quickstart">查看接入示例</Link>
+  <span className="nscha-badge">nscha.nsbbs.eu.cc</span>
+</div>
+
+## 三个设计取舍
+
+<div className="nscha-cards">
+  <div className="nscha-card">
+    <div className="n">01 / SAME ORIGIN</div>
+    <h3>同源闭环</h3>
+    <p>挑战、求解器与校验接口都在本站域名下，验证过程不产生任何第三方请求。</p>
+  </div>
+  <div className="nscha-card">
+    <div className="n">02 / NO IDENTIFIER</div>
+    <h3>零持久标识</h3>
+    <p>不写 Cookie、不做指纹、不记录鼠标轨迹。验证结束，这次访问就结束。</p>
+  </div>
+  <div className="nscha-card">
+    <div className="n">03 / NO PUZZLE</div>
+    <h3>没有谜题</h3>
+    <p>访客只需等待一次后台计算，不需要选图、识字，也不用在九宫格里找东西。</p>
+  </div>
+</div>
+
+:::tip
+
+**适用范围** — NSCHA 目前用于 gamesense 的登录、注册与密码找回。你在验证框右下角看到的标记，指向的就是这份文档。
+
+:::
+
+## 按这个顺序读
+
+<div className="nscha-next">
+  <Link to="/intro/what-is-nscha"><strong>NSCHA 是什么 →</strong><span>定义、边界与设计出发点</span></Link>
+  <Link to="/how-it-works"><strong>一次验证的流程 →</strong><span>逐步拆解请求与响应</span></Link>
+  <Link to="/configuration"><strong>配置参考 →</strong><span>难度、超时与参数</span></Link>
+</div>

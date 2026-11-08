@@ -1,0 +1,10 @@
+node_modules/
+.docusaurus/
+build/
+.cache-loader/
+*.log
+.preview/
+.DS_Store
+.env
+.env.*
+!.env.example

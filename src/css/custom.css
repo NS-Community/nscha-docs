@@ -1,0 +1,350 @@
+/* NSCHA docs — gamesense / Cobalt palette.
+   One signal colour only: #95b806. Everything else is charcoal and hairlines. */
+
+:root,
+[data-theme='dark'] {
+  --ifm-color-primary: #95b806;
+  --ifm-color-primary-dark: #86a505;
+  --ifm-color-primary-darker: #7e9c05;
+  --ifm-color-primary-darkest: #688104;
+  --ifm-color-primary-light: #a4cb07;
+  --ifm-color-primary-lighter: #acd508;
+  --ifm-color-primary-lightest: #c2ed12;
+  --ifm-color-primary-rgb: 149, 184, 6;
+
+  --ifm-background-color: #1b1b1b;
+  --ifm-background-surface-color: #212122;
+  --ifm-font-color-base: #c8c8c5;
+  --ifm-font-color-secondary: #8b8b89;
+  --ifm-heading-color: #ededeb;
+  --ifm-link-color: #95b806;
+  --ifm-link-hover-color: #b0d907;
+  --ifm-border-color: #333332;
+  --ifm-hr-border-color: #333332;
+  --ifm-toc-border-color: #333332;
+  --ifm-table-border-color: #3a3a39;
+  --ifm-table-stripe-background: #202020;
+  --ifm-code-background: #272726;
+  --ifm-code-color: #e4e4e1;
+  --ifm-code-font-size: 92%;
+  --ifm-navbar-background-color: #20201f;
+  --ifm-navbar-shadow: none;
+  --ifm-footer-background-color: #181818;
+  --ifm-menu-color: #a8a8a6;
+  --ifm-menu-color-active: #95b806;
+  --ifm-menu-color-background-active: #212122;
+  --ifm-menu-color-background-hover: #212122;
+  --ifm-blockquote-color: #8b8b89;
+  --ifm-badge-background: #272726;
+  --ifm-button-background-color: #272726;
+  --ifm-button-color: #ededeb;
+  --ifm-pagination-nav-color-hover: #95b806;
+  --docusaurus-highlighted-code-line-bg: rgba(149, 184, 6, .09);
+
+  --doc-sidebar-width: 268px;
+  --ifm-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --ifm-font-family-monospace: 'SFMono-Regular', Consolas, 'Liberation Mono',
+    Menlo, monospace;
+  --ifm-heading-font-weight: 600;
+  --ifm-global-radius: 3px;
+  --ifm-code-border-radius: 4px;
+}
+
+html[data-theme='dark'] .navbar,
+.navbar {
+  border-bottom: 1px solid #333332;
+}
+
+.navbar__title {
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: #ededeb;
+}
+
+.navbar__link--active {
+  color: #95b806;
+}
+
+.footer {
+  border-top: 1px solid #333332;
+}
+
+.theme-doc-sidebar-menu .menu__link--active:not(.menu__link--sublist) {
+  border-left: 2px solid #95b806;
+}
+
+.table-of-contents__link--active,
+.table-of-contents__link:hover {
+  color: #95b806;
+}
+
+.markdown h1 {
+  font-size: 2.2rem;
+  letter-spacing: -.01em;
+}
+.markdown h2 {
+  border-top: 1px solid #333332;
+  padding-top: 1.6rem;
+  margin-top: 2.4rem;
+  font-size: 1.5rem;
+}
+.markdown h3 {
+  font-size: 1.15rem;
+}
+.markdown > h1:first-child,
+.markdown > h2:first-child {
+  border-top: 0;
+  margin-top: 0;
+  padding-top: 0;
+}
+.markdown code:not(pre code) {
+  border: 1px solid #3a3a39;
+  background: #272726;
+  color: #d8e8a8;
+}
+.markdown pre {
+  background: #151515 !important;
+  border: 1px solid #3a3a39;
+  border-radius: 4px;
+}
+.markdown table {
+  display: table;
+  width: 100%;
+}
+.markdown th {
+  background: #272726;
+  color: #ededeb;
+  font-weight: 600;
+}
+.markdown td {
+  background: #1b1b1b;
+}
+.markdown blockquote {
+  border-left-color: #95b806;
+}
+.markdown hr {
+  background: #333332;
+}
+/* Docusaurus maps MDX admonitions onto semantic classes — :::tip becomes
+   .alert--success, :::caution becomes .alert--warning. Cover the base class
+   so every admonition stays charcoal with a single green rail instead of
+   falling back to the theme's saturated success/warning fills. */
+.markdown .alert,
+.alert {
+  --ifm-alert-background-color: #212122;
+  --ifm-alert-background-color-highlight: #262626;
+  --ifm-alert-border-color: #95b806;
+  --ifm-alert-color: #c8c8c5;
+  background-color: #212122 !important;
+  color: #c8c8c5 !important;
+  border-left: 3px solid #95b806 !important;
+}
+.markdown .alert--warning,
+.markdown .alert--caution,
+.markdown .alert--danger {
+  --ifm-alert-background-color: #2a2617;
+  --ifm-alert-background-color-highlight: #302b1a;
+  --ifm-alert-border-color: #ffcc00;
+  --ifm-alert-color: #e4dcb8;
+  background-color: #2a2617 !important;
+  color: #e4dcb8 !important;
+  border-left-color: #ffcc00 !important;
+}
+
+/* ── Landing page / chapter helpers used from MDX ───────────────── */
+
+.nscha-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #95b806;
+  margin-bottom: 14px;
+}
+.nscha-latin {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 12px;
+  letter-spacing: .04em;
+  color: #7b7b79;
+  margin: -6px 0 18px;
+}
+.nscha-lede {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: #ededeb;
+  margin: 0 0 20px;
+  max-width: 720px;
+}
+.nscha-brand {
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+.nscha-brand .w { color: #eaeaea; }
+.nscha-brand .g { color: #95b806; }
+
+.nscha-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 24px 0 32px;
+}
+.nscha-btn {
+  display: inline-block;
+  padding: 9px 18px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none !important;
+  border: 1px solid transparent;
+  transition: background .15s, border-color .15s;
+}
+.nscha-btn--primary {
+  background: #95b806;
+  color: #151515 !important;
+  border-color: #95b806;
+}
+.nscha-btn--primary:hover { background: #a9d007; }
+.nscha-btn--ghost {
+  background: #1b1b1b;
+  color: #d8d8d6 !important;
+  border-color: #4a4a48;
+}
+.nscha-btn--ghost:hover { border-color: #95b806; }
+.nscha-badge {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 11px;
+  color: #7b7b79;
+  border: 1px solid #3a3a39;
+  padding: 4px 9px;
+  border-radius: 3px;
+}
+
+.nscha-cards,
+.nscha-layers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 26px 0;
+}
+.nscha-card,
+.nscha-layer {
+  background: #212122;
+  border: 1px solid #333332;
+  border-radius: 4px;
+  padding: 20px;
+}
+.nscha-layer { border-top: 2px solid #95b806; }
+.nscha-card h3,
+.nscha-layer h3 {
+  margin: 10px 0 8px;
+  font-size: 15px;
+  color: #ededeb;
+}
+.nscha-card p,
+.nscha-layer p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #a8a8a6;
+}
+.nscha-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+.nscha-layer .n,
+.nscha-card .n {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: #95b806;
+}
+
+.nscha-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  background: #212122;
+  border: 1px solid #333332;
+  border-radius: 4px;
+  padding: 16px 18px;
+  margin: 24px 0;
+}
+.nscha-flow .node {
+  font-size: 12px;
+  padding: 6px 11px;
+  border: 1px solid #4a4a48;
+  border-radius: 3px;
+  color: #d8d8d6;
+  background: #1b1b1b;
+}
+.nscha-flow .node.hi {
+  border-color: #95b806;
+  color: #95b806;
+  font-family: var(--ifm-font-family-monospace);
+}
+.nscha-flow .arw { color: #6f6f6d; font-size: 13px; }
+
+.nscha-steps { counter-reset: step; margin: 24px 0; }
+.nscha-step {
+  position: relative;
+  padding: 0 0 20px 46px;
+  border-left: 1px solid #333332;
+  margin-left: 13px;
+}
+.nscha-step:last-child { border-left-color: transparent; padding-bottom: 0; }
+.nscha-step::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: -14px;
+  top: -2px;
+  width: 27px;
+  height: 27px;
+  line-height: 25px;
+  text-align: center;
+  border-radius: 50%;
+  background: #212122;
+  border: 1px solid #95b806;
+  color: #95b806;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 12px;
+  font-weight: 700;
+}
+.nscha-step h3 { margin: 0 0 6px; font-size: 15px; }
+.nscha-step p { margin: 0; font-size: 13px; line-height: 1.75; color: #a8a8a6; }
+
+.nscha-next {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 24px 0;
+}
+.nscha-next a {
+  display: block;
+  background: #212122;
+  border: 1px solid #333332;
+  border-radius: 4px;
+  padding: 18px;
+  text-decoration: none !important;
+  color: #ededeb !important;
+}
+.nscha-next a:hover { border-color: #95b806; }
+.nscha-next strong { display: block; font-size: 14px; margin-bottom: 6px; }
+.nscha-next span { font-size: 12px; color: #8b8b89; }
+
+.nscha-note {
+  font-size: 12px;
+  color: #7b7b79;
+  margin-top: -10px;
+}
+.nscha-yes { color: #95b806; font-weight: 600; }
+
+@media (max-width: 900px) {
+  .nscha-cards,
+  .nscha-layers,
+  .nscha-next { grid-template-columns: 1fr; }
+}

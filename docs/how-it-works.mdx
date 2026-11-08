@@ -1,0 +1,46 @@
+---
+title: 工作原理
+sidebar_position: 3
+---
+
+# 工作原理
+
+一次验证由四个步骤组成，全部在一次页面访问内完成。服务端**不为「未完成的挑战」保存任何状态**。
+
+<div className="nscha-flow">
+  <span className="node">浏览器</span><span className="arw">→</span>
+  <span className="node hi">/challenge</span><span className="arw">→</span>
+  <span className="node">本地求解</span><span className="arw">→</span>
+  <span className="node hi">/redeem</span><span className="arw">→</span>
+  <span className="node">业务接口</span>
+</div>
+
+<div className="nscha-steps">
+  <div className="nscha-step"><h3>索取挑战</h3><p>请求一份带签名的参数：子挑战数量、盐长度、难度与有效期。参数自洽，无需先存进数据库。</p></div>
+  <div className="nscha-step"><h3>本地求解</h3><p>浏览器在 Worker 里反复计算 SHA-256，直到哈希满足难度要求。求解器由本站静态资源提供。</p></div>
+  <div className="nscha-step"><h3>兑换令牌</h3><p>把解交回服务端。验签、验算、确认这份挑战未被兑换过，随后签发短时效令牌。</p></div>
+  <div className="nscha-step"><h3>随表单提交</h3><p>业务接口在信任数据之前校验用途与时效；不匹配或过期一律拒绝。</p></div>
+</div>
+
+## 三层保证
+
+<div className="nscha-layers">
+  <div className="nscha-layer"><div className="n">01 / COST</div><h3>计算成本</h3><p>难度以前导零个数计量。提高一档，批量请求的代价就近乎翻倍，单个访客几乎无感。</p></div>
+  <div className="nscha-layer"><div className="n">02 / SCOPE</div><h3>作用域绑定</h3><p>登录页解出的挑战不能拿去注册或找回密码。用途随挑战签发并写进令牌，逐次比对。</p></div>
+  <div className="nscha-layer"><div className="n">03 / ONCE</div><h3>兑换不可重放</h3><p>同一份挑战只能兑换一次；令牌带过期时间与专用标记，普通会话凭证无法冒充。</p></div>
+</div>
+
+## 本章页面
+
+| 页面 | 内容 |
+| --- | --- |
+| [索取挑战](./how-it-works/challenge.mdx) | 参数、签名与无状态设计 |
+| [本地求解](./how-it-works/solving.mdx) | Worker、WASM 与难度语义 |
+| [兑换令牌](./how-it-works/redeem.mdx) | 验算、一次性兑换与令牌内容 |
+| [作用域与重放](./how-it-works/scope-and-replay.mdx) | 用途注入、白名单与重放防护 |
+
+:::tip
+
+想直接动手？跳到[五分钟接入](./getting-started/quickstart.mdx)。
+
+:::

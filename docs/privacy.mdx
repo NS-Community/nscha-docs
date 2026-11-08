@@ -1,0 +1,37 @@
+---
+title: 隐私
+sidebar_position: 4
+---
+
+# 隐私
+
+「不监控」不是一句口号，而是可以逐项核对的清单。这一章说明数据边界在哪、我们与常见做法的差别是什么。
+
+## 一条原则
+
+> 验证只需要证明「这道题目被算过」，不需要知道「是谁算的」。
+
+因此协议里没有任何需要长期保存的访客信息。挑战参数在令牌里，兑换记录是进程内的短时占位，令牌过期后不留痕迹。
+
+## 逐项核对
+
+| 项目 | NSCHA |
+| --- | --- |
+| 请求目的地 | <span className="nscha-yes">仅本站源</span> |
+| Cookie / 本地存储 | <span className="nscha-yes">不写入</span> |
+| 行为与设备信息 | <span className="nscha-yes">不采集</span> |
+| 求解器来源 | <span className="nscha-yes">本站静态资源</span> |
+| 服务端留存 | <span className="nscha-yes">短时的一次性记录</span> |
+
+## 本章页面
+
+| 页面 | 内容 |
+| --- | --- |
+| [数据边界](./privacy/data-boundary.mdx) | 什么进来、什么留下、什么消失 |
+| [与常见方案对照](./privacy/comparison.mdx) | 按能力逐项对照，不点名任何产品 |
+
+:::info
+
+对照表右列描述的是**一类方案的常见做法**，用于说明取舍，不指向任何具体产品或服务。
+
+:::
