@@ -49,10 +49,14 @@ pnpm typecheck      # TS 配置检查
 
 ## 配套的可部署组件服务
 
-`E:\nscha-widget`（独立仓库）是本站所描述协议的**实际交付物**：一个无状态
-Serverless Function 提供 `/challenge`、`/redeem`、`/verify`，一个单文件 `widget.js`
-提供可嵌入的 `<nscha-widget>` 自定义元素。别人用一行 `<script>` 即可接入，
-同样可以托管到 Vercel。本站所有代码片段都与该服务的真实接口一一对应。
+[NS-Community/nscha-widget](https://github.com/NS-Community/nscha-widget)（公开仓库）
+是本站所描述协议的**实际交付物**：一个无状态 Serverless Function 提供
+`/challenge`、`/redeem`、`/verify`，一个单文件 `widget.js` 提供可嵌入的
+`<nscha-widget>` 自定义元素。仓库公开、内含 `vercel.json`，别人可以直接用部署页上的
+Deploy 按钮克隆到自己的账号，或用一行 `<script>` 接入已部署的实例。
+本站所有代码片段都与该服务的真实接口一一对应。
+
+本站源码在 [NS-Community/nscha-docs](https://github.com/NS-Community/nscha-docs)（公开仓库）。
 
 ## 内容来源
 
